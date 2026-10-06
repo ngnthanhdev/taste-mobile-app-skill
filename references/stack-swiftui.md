@@ -2,6 +2,10 @@
 
 Everything stack-specific for building screens in SwiftUI. Rule IDs ([R-SA], [R-NV], [R-TZ], [R-BS], [R-DL], [R-KB]) come from the skill's layout rules; this file says how to satisfy them in code. Link shorthand: `doc:` = `https://developer.apple.com/documentation/`, `hig:` = `https://developer.apple.com/design/human-interface-guidelines/`. Versions below are the iOS "introduced" values from Apple's docs (checked 2026-10-06). Gate anything above the project's deployment target with `if #available(iOS NN, *)`.
 
+## 0. Visual implementation contract
+
+Read `MOBILE-DESIGN.md` before choosing component variants, typography, surface treatment, image treatment, animation or navigation chrome. Its `visual_dna`, `composition` and screen inventory decide **what** a screen is; this file decides **how** to implement that on this stack, and `layout-mechanics.md` how it must behave. When a snippet below conflicts with the design file, the design file wins on appearance and this file wins on mechanics. Do not start a screen from the component list in this file.
+
 ## 1. Stack sniff (existing stack wins)
 
 ```bash

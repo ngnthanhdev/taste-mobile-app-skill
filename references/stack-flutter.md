@@ -2,6 +2,10 @@
 
 The Flutter-specific way to build screens that satisfy the layout rules (R-SA, R-NV, R-TZ, R-BS, R-DL, R-KB). The rules themselves, and the reasons for them, live in the skill's layout and navigation references. Every snippet compiles with `flutter analyze` on Flutter 3.47 stable with go_router 18.0.2. Claims marked "(verified)" were checked with widget tests on that version. On older SDKs, check each API in the installed version.
 
+## 0. Visual implementation contract
+
+Read `MOBILE-DESIGN.md` before choosing component variants, typography, surface treatment, image treatment, animation or navigation chrome. Its `visual_dna`, `composition` and screen inventory decide **what** a screen is; this file decides **how** to implement that on this stack, and `layout-mechanics.md` how it must behave. When a snippet below conflicts with the design file, the design file wins on appearance and this file wins on mechanics. Do not start a screen from the component list in this file.
+
 ## 1. Stack sniff
 
 ```bash

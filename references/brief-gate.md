@@ -9,7 +9,7 @@ Read these signals, in this order, before writing the block:
 1. **App kind**: consumer social, utility or tool, fitness or health, fintech, commerce, content or media, productivity, kids, field or operations tool, companion to a physical product.
 2. **Audience and context of use**: who, when, how often, one hand or two, standing or sitting, gloves, sunlight, in a hurry. Context picks density and target sizes, not taste.
 3. **Vibe words the user used**: "clean", "playful", "premium", "native", "like Airbnb", "dense", "calm", "brandy". Quote them back.
-4. **Reference apps or screenshots** the user gave. On mobile, real apps are the design language the way reference sites are on the web. Extract a *principle* from each reference (type scale of A, onboarding rhythm of B), never a layout to copy.
+4. **Reference apps or screenshots** the user gave. On mobile, real apps are the design language the way reference sites are on the web. A reference is used only after it has gone through `reference-extraction.md`: observation, principle, application in this app, and the one thing that must not be copied. Two to four principles per reference; the name alone is never an instruction.
 5. **Platforms**, and which one is first-class.
 6. **Existing brand assets**: logo, palette, type, photography, an existing design system. For a redesign these are starting material.
 7. **Quiet constraints** that override aesthetics: accessibility-first audience, kids, regulated domains (finance, health), offline-heavy use, enterprise distribution.
@@ -49,7 +49,7 @@ The three questions, in priority order, with default templates:
 |---|---|---|
 | 1 | Who uses it, when, and how (one hand, in a hurry, outdoors)? | "I am assuming <audience>, used <frequency> for <duration>, mostly one-handed. Correct me if not." |
 | 2 | Mood in three adjectives plus one "not": | "I am reading the mood as <a, b, c>, and not <d>. Change any word." |
-| 3 | Two or three apps you admire for this, and what you like about each? | "I will take <principle> from <App A> and <principle> from <App B> unless you have others in mind." |
+| 3 | Two or three apps you admire for this, and what you like about each? | "I will take <principle> from <App A> and <principle> from <App B> unless you have others in mind." The answer is a reference list; Phase 3 extracts it. Never ask the user which principle to take. |
 
 Platform, brand assets and workflow (Expo managed vs bare) are asked **instead of** one of these only when they are unknown and blocking.
 
@@ -66,6 +66,7 @@ Example message (Vietnamese user):
 |---|---|
 | Target platform on an empty repo | Everything already in the repo: tokens, components, navigation library, icon set, animation library |
 | Audience and context of use | Dial values, palette, type roles, radius system, spacing scale |
+| (never) which territory, DNA or composition the user wants | Visual territory, the ten DNA dimensions, archetype per screen, repetition limits, which reference principle wins a conflict |
 | Existing brand to preserve, or free to propose | Which native component to use for each pattern |
 | Expo managed vs bare when native modules are needed | Tab count and navigation containers |
 | Offline, security or regulatory requirement that shapes flows | Onboarding length, sign-in timing, permission timing (follow `patterns.md`) |
@@ -77,4 +78,4 @@ With `--autonomous`, or when the user does not answer within the conversation tu
 
 ## 5. What the gate must produce
 
-Before Phase 3 you have: the App Read with no field that blocks the build, the mood as three adjectives and one negation, two or three reference principles, the first-class platform, and the posture. If any of those is missing after the round, fill it with the default and move on.
+Before Phase 3 you have: the App Read with no field that blocks the build, the mood as three adjectives and one negation, two or three named references (extracted in Phase 3 into the `references:` records), the first-class platform, and the posture. If any of those is missing after the round, fill it with the default and move on. The mood adjectives decide nothing by themselves; Phase 3 translates each into observable rules (`visual-dna.md` §2).

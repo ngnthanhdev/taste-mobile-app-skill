@@ -2,6 +2,10 @@
 
 How to build screens in Expo / React Native. Rule IDs such as [R-SA1] and [R-BS5] come from the layout mechanics rules; this file maps them to code. APIs here change between releases. Where a claim has a URL, check the installed version and that page before relying on it.
 
+## 0. Visual implementation contract
+
+Read `MOBILE-DESIGN.md` before choosing component variants, typography, surface treatment, image treatment, animation or navigation chrome. Its `visual_dna`, `composition` and screen inventory decide **what** a screen is; this file decides **how** to implement that on this stack, and `layout-mechanics.md` how it must behave. When a snippet below conflicts with the design file, the design file wins on appearance and this file wins on mechanics. Do not start a screen from the component list in this file.
+
 ## 1. Stack sniff (existing project)
 
 Read these before writing a screen. The existing stack always wins over the defaults in section 2. Never add a second library for something the project already handles.

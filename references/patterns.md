@@ -86,7 +86,13 @@ Form fields that remain are grouped by mental model, carry persistent labels, th
 Phase 5 produces one row per screen:
 
 ```
-| Screen | Purpose | Focal point | Primary action | Signature element | States (L/E/Err/P) | Keyboard plan | Permissions |
+| Screen | Purpose | Archetype | Focal point | Hierarchy | Primary action | Signature | Content strategy | Surface strategy | States (L/E/Err/P) | Keyboard plan | Permissions |
 ```
 
-A screen is ready to build only when every column is filled. "n/a" is allowed for keyboard and permissions; it is not allowed for states.
+Archetype comes from `screen-archetypes.md` §1; hierarchy is the first three or four levels in order (`composition.md` §1); content strategy says what leads (image-first, number-first, text-first, list-first); surface strategy says open canvas, grouped lists or cards-to-group. A screen is ready to build only when every column is filled. "n/a" is allowed for keyboard, permissions and signature; it is not allowed for states, archetype, focal point or hierarchy.
+
+## 13. Visual variation by task
+
+Different product tasks may reuse interaction primitives without reusing the same visual composition. **Reuse behavior, not composition.**
+
+A shared component is allowed. A shared screen template is not automatically allowed: two screens share a composition only when `screen-archetypes.md` §1 gives them the same archetype for the same reason, and even then each has its own hierarchy row. Home and Settings do not look alike because both use the list component; a transfer and a booking do not look alike because both are forms. The states (§5 to §7), the keyboard plan and the permission moments are shared behavior and are reused exactly; the composition around them is decided per screen.

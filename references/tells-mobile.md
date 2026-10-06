@@ -2,7 +2,7 @@
 
 The signatures of generated mobile UI. Each tell is a binary ban with an override path, a reason (so it can be retired when the reason stops holding), and a check type: **S** static grep on code or tokens, **V** measured on a screenshot, **C** checklist where the agent must quote evidence (file:line or screen region).
 
-Tells are grouped: §A is run against the **direction cards** in Phase 3; §B to §G against the **built screens** in Phase 7. Numbering is stable; append, do not renumber.
+Tells are grouped: §A is run against the **direction cards** in Phase 3; §B to §G against the **built screens** in the mechanical pass of Phase 7; §H (composition) and §I (identity) in the visual pass, against the screens and the commitments in `MOBILE-DESIGN.md` (`visual-qa.md`). Numbering is stable; append, do not renumber.
 
 Two cautions. First, banlists expire: a Refactoring UI tip from 2018 (the colored accent border on a card) is now one of the clearest AI tells, and the reaction to "no Inter, no purple" has produced a second wave (cream background, serif display, terracotta accent; near-black background with one neon accent). Review this file quarterly against fresh generated output. Second, the user's explicit brief beats every tell here. If they ask for indigo, give them indigo and note it.
 
@@ -106,6 +106,37 @@ Two cautions. First, banlists expire: a Refactoring UI tip from 2018 (the colore
 | G3 | Destructive residue: "delete account" clears the store but leaves notifications, cached images, keychain tokens | Side effects not enumerated | S teardown covers every subsystem initialized | Enumerate and clear |
 | G4 | Completion with no undo and no next action; a finished list that is a dead end | See `patterns.md` §8 | C | Undo, then a next action |
 | G5 | Permission prompt at launch | Denied prompts | S permission calls in root layout | Prompt at the moment of need with a pre-prompt |
+
+## H. Composition tells
+
+Composition-level signatures. Each maps to one or more C-AI codes in `composition.md` §3, which carry the full definition and the check; this table says what to look for and how serious it is. Severity: **hard** is fixed before hand-off, **note** goes to the delivery note.
+
+| # | Tell | Why it is suspicious | Severity | C-AI | Instead |
+|---|---|---|---|---|---|
+| H1 | Repeated section grammar: every section is heading, subtitle, then a card or carousel | Section shape came from a component demo, not from the content | hard when more than two sections share it | C-AI-01 | Vary section shape by content: a lead item, a list, a line, a chart |
+| H2 | Universal card container: every content item is a rounded rectangle | The container is doing the work the hierarchy should do | hard above the repetition limit (`composition.md` §4) | C-AI-02 | Space and hairlines; containers only for mixed-media objects |
+| H3 | Uniform rhythm: one padding, one gap, one ratio, nothing bleeds | Flat rhythm reads as a template | note; hard when combined with H2 | C-AI-07, C-AI-08 | Alternate bleed and inset; vary ratio by content; three spacing levels |
+| H4 | Centered by default on content and data screens | Centering hides parent-child relations and breaks scanning | hard | C-AI-04 | Leading axis; centered only for single-message screens |
+| H5 | Equal visual weight: modules, items or fields all the same size regardless of importance | Content has not earned its size | hard on Dashboard and Hero; note elsewhere | C-AI-14 | Size by importance (`visual-dna.md` §4); one module dominates |
+| H6 | Component-first composition: the screen is whatever the library offered, in library order | Nothing was decided before building | hard | C-AI-11, C-AI-15 | Inventory row first (task, hierarchy, anchor, archetype), components last |
+| H7 | No visual anchor: nothing is first | The eye has nowhere to land; the screen reads as a list of things | hard | C-AI-12 | One focal point per screen, in the first viewport |
+| H8 | Competing anchors: two or more elements at display scale or full-bleed | Everything shouts | hard | C-AI-13 | One dominant idea, up to two supporting (`visual-dna.md` §5) |
+| H9 | Screen sameness: the same archetype, rhythm and surface strategy on screens with different intents | The user cannot tell where they are; the design system produced sameness, not consistency | hard when more than half the inventory (excluding List) shares one archetype | C-AI-03, C-AI-09 | Archetype by intent (`screen-archetypes.md`) |
+| H10 | Generic CTA ending: every screen ends in a full-width filled accent button, including screens with no decision | The CTA is a layout habit, not an action | hard when the screen has no decision; note otherwise | C-AI-03, C-AI-06 | Filled button only where the decision is; weight matches importance (VQ9) |
+
+## I. Identity tells
+
+Signatures of an app that is tokenized correctly and still anonymous. Checked against `MOBILE-DESIGN.md` (`visual_identity`, `visual_dna`, `references`, the signature column). All C type: quote the evidence.
+
+| # | Tell | Why | Check | Instead |
+|---|---|---|---|---|
+| I1 | The app could be re-skinned with another accent and remain visually identical | Identity lives in one token | C swap the accent hue mentally and ask what else changes | Identity in composition, type, imagery, shapes and interaction (ten DNA dimensions) |
+| I2 | No visual element comes from the actual product domain | Nothing in the domain was looked at | C name the domain element per screen (VQ6) | The object, the photo, the chart, the unit, the real copy from the domain |
+| I3 | Typography is interchangeable with system defaults without affecting identity | Type carries no decision | C remove the display face mentally; does anything change | A deliberate display moment, or an honest decision to be fully system (EXPRESSION 1 to 3) |
+| I4 | A declared signature element never appears | The direction was written and not built | C signature column vs screens (VQ7) | Build it on the declared screens or remove it from the direction |
+| I5 | The signature element appears so often it stops being a signature | Signature as wallpaper | C count signature screens vs inventory; more than a third is a hit | Signature on tab roots and the one success moment, quiet elsewhere |
+| I6 | Every screen has essentially the same composition | See H9; recorded here because it is an identity failure too | C sameness check (`screen-archetypes.md` §3) | At least three archetypes in an app of six or more screens |
+| I7 | References affected only colors, not composition, hierarchy or behavior | Extraction stopped at the palette | C each reference record has an application visible in a built screen | Re-extract (`reference-extraction.md`); drop references that changed nothing |
 
 ## Grep
 

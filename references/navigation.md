@@ -20,7 +20,7 @@ android back: default pop | <declared exceptions, e.g. compose confirms discard>
 max taps to any core screen: <n>
 ```
 
-Every line is a commitment the self-check diffs against the code. If the app has no tabs (a single-flow utility such as a camera-first scanner), say so and name the pattern (stack only, or full-screen plus sheets).
+Every line is a commitment the self-check diffs against the code. Navigation determines movement; Visual DNA (`visual-dna.md`) determines visual treatment. A wrong information architecture is never fixed with styling, and a strong visual direction never changes a container decision made here. If the app has no tabs (a single-flow utility such as a camera-first scanner), say so and name the pattern (stack only, or full-screen plus sheets).
 
 ## 2. Container decision tree
 

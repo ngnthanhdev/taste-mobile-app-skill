@@ -73,11 +73,11 @@ Touch targets of 44 pt (iOS) / 48 dp (Android) survive DENSITY 10. Font sizes ne
 | Kids, education | Targets 56 pt or larger, high contrast, zero dark patterns, fewer choices per screen | Tiny icon buttons, ad-adjacent layouts, infinite scroll |
 | Field, operations | High contrast for sunlight, large targets for gloves, offline-first states, one task per screen | Thin type, low-contrast grays, gesture-only actions |
 
-## 6. The signature element
+## 6. The dominant idea and the signature element
 
-Each screen gets **at most one** bold move: a distinctive header treatment, one expressive component, one signature interaction, one hero image or chart. Everything else stays quiet and native-feeling. A screen where everything is expressive reads as noise, and an app whose every screen shouts has no voice.
+Each screen has **one dominant visual idea**, supported by **up to two secondary visual behaviors**; everything else stays quiet and native-feeling (`visual-dna.md` §5). A screen where everything is expressive reads as noise, and an app whose every screen shouts has no voice. The dials bound how loud the dominant idea may be: at EXPRESSION 1 to 3 it is a typographic or content decision inside native components; at 4 to 7 it may be a custom hero, chart or signature component while chrome stays native; at 8 and above it may include the chrome.
 
-Write the signature element per screen in the screen inventory. If you cannot name it, the screen has none and that is fine; if you name two, remove one.
+The **signature element** is the dominant idea on the signature screens (tab roots and the one success moment, usually). Write the dominant idea per screen in the screen inventory; name the signature where it applies. If you cannot name a dominant idea, the screen has none and that is a defect (tell H7); if you name two, one of them is a supporting behavior or it goes.
 
 ## 7. Recording the dials
 
