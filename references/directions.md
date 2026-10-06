@@ -60,6 +60,8 @@ Before presenting, check every card against `tells-mobile.md` §A and these ques
 - Is there one display size, and is hierarchy built with weight and color rather than more sizes?
 - Is the signature element one thing, named, on named screens?
 - Does the direction keep native chrome unless EXPRESSION is 8 or more?
+- Does the posture's component language actually appear in the plan? Android-first at EXPRESSION 1 to 4 means Material filled or outlined fields, pill buttons, 56 dp list items and a top app bar; iOS-first means grouped lists, system sheets and large titles. Name the three components that prove it (tell B17).
+- For every form screen in the likely inventory: what object is visible, which input is the hero and with which control, and what consequence is shown live? (`patterns.md` §4b)
 - Can every screen in the likely inventory be built in this direction without inventing new tokens?
 - Does it survive dark mode and large text, or is the plan for them written?
 - Is "deliberately not doing" specific (not "clutter") and does it include the nearest slop default?

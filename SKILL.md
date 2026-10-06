@@ -73,7 +73,7 @@ Write `MOBILE-DESIGN.md` at the project root from `templates/MOBILE-DESIGN.md`: 
 ## Phase 5 — Navigation and flows
 
 1. Emit the **Nav Read** from `references/navigation.md`: tabs or no tabs, route tree with container type per route (tab root, push, modal, sheet, full-screen group), entry points, sheets, deep links, Android back exceptions, max taps to any core screen. Add it to `MOBILE-DESIGN.md`.
-2. Build the **screen inventory**: every screen with its purpose, its one focal point, its primary action, and its four states (loading, empty, error, populated). Form screens also list their keyboard plan.
+2. Build the **screen inventory**: every screen with its purpose, its one focal point, its primary action, and its four states (loading, empty, error, populated). Form screens also answer the four questions in `references/patterns.md` §4b (object visible, hero input and its control, live consequence, content reaching the CTA) and list their keyboard plan.
 3. Apply `references/patterns.md` for onboarding, sign-in timing, permissions, empty and error states, loading, and the one success moment.
 
 ## Phase 6 — Build

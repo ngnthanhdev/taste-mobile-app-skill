@@ -30,6 +30,19 @@ Taste at the flow level is mostly restraint backed by evidence. Each pattern bel
 
 **Rule.** One primary action per screen. Advanced options live behind "More", a sheet, or a sub-screen. A form shows the fields needed to finish the common case; the rare case is a disclosure. Settings are grouped by mental model, with destructive actions last and in the destructive color.
 
+## 4b. Forms are tasks, not lists of fields
+
+**Why.** The most common generated screen is the template form: label, box, label, box, identical rounded fields, a full-width accent button floating under a void. It reads as generated because nothing on it belongs to the domain and nothing responds to the input (tell B16).
+
+**Rule.** Before drawing a form, answer four questions and let the answers shape the screen:
+
+1. **What object is being acted on, and is it visible?** The product being counted, the patient being booked, the person receiving money, the task's project. Show it at the top as the thing it is (a warehouse label with SKU and barcode, a patient line with age and allergy, a recipient with bank), not as another field.
+2. **Which input is the task, and what control does the context call for?** That input is the hero, set large. A quantity for gloved hands is a stepper with quick-add chips, with the keyboard as the fallback. An amount is a tabular number with a currency pad that has a "000" key. A date is a row of day chips, a time is a grid of free slots. A title in a task tool is plain text without a box, Things or Linear style, with properties as chips underneath. A text box with a blinking cursor is the right control only for free text.
+3. **What does the input change, and is that shown live?** "Tồn 18 → 42 sau nhập, vẫn dưới mức tối thiểu 50." "Khả dụng 26.887.090 ₫ · không mất phí." "Bác sĩ Quang còn 3 chỗ sáng thứ Tư." The consequence line is what makes a form feel like software and not a worksheet.
+4. **Does the content reach the CTA?** Secondary fields, recent values, or a running summary fill the space so the button sits under content, not under air. If there is nothing to fill it with, the screen is probably a sheet, not a full screen.
+
+Form fields that remain are grouped by mental model, carry persistent labels, the correct keyboard, autofill hints and return keys (layout-mechanics §4), and show field-specific errors on blur or submit.
+
 ## 5. Empty states
 
 **Evidence.** Empty states exist to explain the system state, teach the app, and lead straight to the main task. "An empty screen is an invitation to act."
