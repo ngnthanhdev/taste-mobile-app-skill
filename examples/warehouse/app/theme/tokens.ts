@@ -12,6 +12,8 @@ export const colors = {
     warn: '#F5B400',
     danger: '#B3261E',
     divider: '#E4E4E1',
+    scrim: 'rgba(0,0,0,0.6)',      // over the camera only
+    scrimLight: 'rgba(0,0,0,0.4)',
   },
   dark: {
     surface: '#121212',
@@ -23,6 +25,8 @@ export const colors = {
     warn: '#F5B400',
     danger: '#F2B8B5',
     divider: '#2A2A2A',
+    scrim: 'rgba(0,0,0,0.6)',
+    scrimLight: 'rgba(0,0,0,0.4)',
   },
 } as const;
 

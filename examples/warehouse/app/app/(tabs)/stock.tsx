@@ -1,11 +1,15 @@
 // Kho: List. Search, then 56 dp rows: name, mono code, quantity right, yellow left bar when below minimum.
 import React, { useMemo, useState } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Chip } from '../../components/Chip';
+import { Divider } from '../../components/Divider';
+import { EmptyState } from '../../components/EmptyState';
+import { FilledField } from '../../components/FilledField';
 import { InkBar } from '../../components/InkBar';
+import { Snackbar } from '../../components/Snackbar';
 import { formatQuantity, listSkus, useStock, type Sku } from '../../data/stock';
-import { fontFamily, radius, spacing, type } from '../../theme/tokens';
+import { fontFamily, spacing, type } from '../../theme/tokens';
 import { useTheme } from '../../theme/useTheme';
 
 export default function StockScreen() {
@@ -22,18 +26,9 @@ export default function StockScreen() {
 
   return (
     <View style={[styles.screen, { backgroundColor: c.surface }]}>
-      <InkBar label="Kho" count={`${all.length} SKU`} />
+      <InkBar label="Kho" count={`${all.length} SKU`} trailing={[{ icon: 'qr-code-scanner', label: 'Quét mã vạch', onPress: () => router.push('/scan') }]} />
       <View style={styles.tools}>
-        <TextInput
-          value={query}
-          onChangeText={setQuery}
-          placeholder="Tìm tên hoặc mã SKU"
-          placeholderTextColor={c.textMuted}
-          returnKeyType="search"
-          clearButtonMode="while-editing"
-          accessibilityLabel="Tìm SKU"
-          style={[styles.search, { backgroundColor: c.surfaceAlt, color: c.text, borderBottomColor: c.textMuted }]}
-        />
+        <FilledField value={query} onChangeText={setQuery} placeholder="Tìm tên hoặc mã SKU" returnKeyType="search" clearButtonMode="while-editing" autoCorrect={false} accessibilityLabel="Tìm SKU" />
         <View style={styles.chips}>
           <Chip label="Tồn thấp" selected={lowOnly} onPress={() => setLowOnly((v) => !v)} />
         </View>
@@ -41,19 +36,19 @@ export default function StockScreen() {
       <FlatList
         data={data}
         keyExtractor={(s) => s.code}
-        renderItem={({ item }) => <SkuRow sku={item} onPress={() => router.push({ pathname: '/receive', params: { code: item.code } })} />}
-        ItemSeparatorComponent={() => <View style={[styles.divider, { backgroundColor: c.divider }]} />}
+        renderItem={({ item }) => <SkuRow sku={item} onPress={() => router.push({ pathname: '/sku/[code]', params: { code: item.code } })} />}
+        ItemSeparatorComponent={Divider}
         ListEmptyComponent={
-          <View style={styles.empty}>
-            <Text style={[styles.emptyText, { color: c.textMuted }]}>
-              {lowOnly ? 'Không có SKU nào dưới mức tối thiểu.' : `Không có SKU nào khớp "${query}".`}
-            </Text>
-            {lowOnly ? <Chip label="Bỏ lọc" onPress={() => setLowOnly(false)} /> : null}
-          </View>
+          lowOnly ? (
+            <EmptyState message="Không có SKU nào dưới mức tối thiểu." actionLabel="Bỏ lọc" onAction={() => setLowOnly(false)} />
+          ) : (
+            <EmptyState message={all.length ? `Không có SKU nào khớp "${query}".` : 'Chưa có SKU. Nhập danh mục để bắt đầu.'} />
+          )
         }
         keyboardDismissMode="on-drag"
         contentContainerStyle={{ paddingBottom: spacing.s24 }}
       />
+      <Snackbar />
     </View>
   );
 }
@@ -76,7 +71,6 @@ function SkuRow({ sku, onPress }: { sku: Sku; onPress: () => void }) {
 const styles = StyleSheet.create({
   screen: { flex: 1 },
   tools: { paddingHorizontal: spacing.s16, paddingTop: spacing.s12, gap: spacing.s12 },
-  search: { ...type.bodyLg, fontFamily: fontFamily.ui, height: 52, paddingHorizontal: spacing.s16, borderBottomWidth: 1, borderTopLeftRadius: radius.field, borderTopRightRadius: radius.field },
   chips: { flexDirection: 'row', gap: spacing.s8, paddingBottom: spacing.s4 },
   row: { minHeight: 56, flexDirection: 'row', alignItems: 'center', paddingRight: spacing.s16 },
   stripe: { width: spacing.s4, alignSelf: 'stretch', marginRight: spacing.s12 },
@@ -85,7 +79,4 @@ const styles = StyleSheet.create({
   rowCode: { ...type.caption, fontFamily: fontFamily.mono, fontVariant: ['tabular-nums'] },
   rowQty: { ...type.bodyLg, fontFamily: fontFamily.mono, fontVariant: ['tabular-nums'] },
   rowUnit: { ...type.caption, fontFamily: fontFamily.ui },
-  divider: { height: StyleSheet.hairlineWidth, marginLeft: spacing.s16 },
-  empty: { paddingHorizontal: spacing.s16, paddingVertical: spacing.s24, gap: spacing.s12, alignItems: 'flex-start' },
-  emptyText: { ...type.body, fontFamily: fontFamily.ui },
 });

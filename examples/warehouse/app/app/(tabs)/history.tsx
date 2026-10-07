@@ -1,37 +1,60 @@
-// Lịch sử: List grouped by day. Rows: ink type tag, SKU, quantity, time. Undo within 5 s lives in the snackbar.
+// Lịch sử: List grouped by day. Rows: ink type tag, SKU, quantity, time. The filter is a form sheet.
 import React from 'react';
 import { SectionList, StyleSheet, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Chip } from '../../components/Chip';
+import { Divider } from '../../components/Divider';
+import { EmptyState } from '../../components/EmptyState';
 import { InkBar } from '../../components/InkBar';
-import { formatQuantity, formatRelativeDay, formatTime, listMovements, useStock, type Movement } from '../../data/stock';
+import { MovementRow } from '../../components/MovementRow';
+import { Snackbar } from '../../components/Snackbar';
+import { rangeLabel, rangeStart, resetHistoryFilter, useHistoryFilter } from '../../data/history-filter';
+import { formatRelativeDay, listMovements, movementLabel, useStock, type Movement } from '../../data/stock';
 import { fontFamily, spacing, type } from '../../theme/tokens';
 import { useTheme } from '../../theme/useTheme';
 
 export default function HistoryScreen() {
   useStock();
   const c = useTheme();
-  const movements = listMovements();
+  const router = useRouter();
+  const filter = useHistoryFilter();
+  const all = listMovements();
+  const start = rangeStart(filter.range).getTime();
+  const movements = all.filter((m) => new Date(m.at).getTime() >= start && (filter.types.length === 0 || filter.types.includes(m.type)));
   const sections = groupByDay(movements);
-  const today = movements.filter((m) => formatRelativeDay(m.at) === 'hôm nay' && !m.undone).length;
+  const today = all.filter((m) => formatRelativeDay(m.at) === 'hôm nay' && !m.undone).length;
+  const active = filter.types.length > 0 || filter.range !== '30d';
 
   return (
     <View style={[styles.screen, { backgroundColor: c.surface }]}>
-      <InkBar label="Lịch sử" count={`hôm nay ${today}`} />
+      <InkBar label="Lịch sử" count={`hôm nay ${today}`} trailing={[{ icon: 'filter-list', label: 'Lọc', onPress: () => router.push('/history-filter') }]} />
+      {active ? (
+        <View style={styles.filters}>
+          <Text style={[styles.filterText, { color: c.textMuted }]} numberOfLines={1}>
+            {[filter.types.map((t) => movementLabel[t].charAt(0) + movementLabel[t].slice(1).toLowerCase()).join(', '), rangeLabel[filter.range]].filter(Boolean).join(' · ')}
+          </Text>
+          <Chip label="Bỏ lọc" onPress={resetHistoryFilter} />
+        </View>
+      ) : null}
       <SectionList
         sections={sections}
         keyExtractor={(m) => m.id}
         renderSectionHeader={({ section }) => (
           <Text style={[styles.section, { color: c.textMuted, backgroundColor: c.surface }]}>{section.title}</Text>
         )}
-        renderItem={({ item }) => <Row movement={item} />}
-        ItemSeparatorComponent={() => <View style={[styles.divider, { backgroundColor: c.divider }]} />}
+        renderItem={({ item }) => <MovementRow movement={item} />}
+        ItemSeparatorComponent={Divider}
         ListEmptyComponent={
-          <View style={styles.empty}>
-            <Text style={[styles.emptyText, { color: c.textMuted }]}>Chưa có phiếu nào. Mỗi lần nhập, xuất hay kiểm kê sẽ được ghi lại ở đây.</Text>
-          </View>
+          active ? (
+            <EmptyState message="Không có phiếu nào khớp bộ lọc." actionLabel="Bỏ lọc" onAction={resetHistoryFilter} />
+          ) : (
+            <EmptyState message="Chưa có phiếu nào. Mỗi lần nhập, xuất, kiểm kê hay điều chỉnh sẽ được ghi lại ở đây." />
+          )
         }
         stickySectionHeadersEnabled
         contentContainerStyle={{ paddingBottom: spacing.s24 }}
       />
+      <Snackbar />
     </View>
   );
 }
@@ -45,38 +68,9 @@ function groupByDay(movements: Movement[]) {
   return Array.from(map, ([title, data]) => ({ title: title.charAt(0).toUpperCase() + title.slice(1), data }));
 }
 
-function Row({ movement }: { movement: Movement }) {
-  const c = useTheme();
-  return (
-    <View style={[styles.row, movement.undone && { opacity: 0.4 }]}>
-      <View style={[styles.tag, { backgroundColor: c.text }]}>
-        <Text style={[styles.tagText, { color: c.surface }]}>NHẬP</Text>
-      </View>
-      <View style={styles.rowText}>
-        <Text style={[styles.rowName, { color: c.text }]} numberOfLines={1}>{movement.skuName}</Text>
-        <Text style={[styles.rowMeta, { color: c.textMuted }]}>
-          <Text style={styles.rowCode}>{movement.skuCode}</Text>{movement.supplier ? ` · ${movement.supplier}` : ''}{movement.lot ? ` · lô ${movement.lot}` : ''}{movement.undone ? ' · đã hoàn tác' : ''}
-        </Text>
-      </View>
-      <Text style={[styles.rowQty, { color: c.text }]}>+{formatQuantity(movement.quantity)}</Text>
-      <Text style={[styles.rowTime, { color: c.textMuted }]}>{formatTime(movement.at)}</Text>
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
   screen: { flex: 1 },
+  filters: { flexDirection: 'row', alignItems: 'center', gap: spacing.s12, paddingHorizontal: spacing.s16, paddingTop: spacing.s12 },
+  filterText: { ...type.body, fontFamily: fontFamily.ui, flex: 1 },
   section: { ...type.caption, fontFamily: fontFamily.ui, fontWeight: '700', letterSpacing: 1, textTransform: 'uppercase', paddingHorizontal: spacing.s16, paddingTop: spacing.s24, paddingBottom: spacing.s8 },
-  row: { minHeight: 56, flexDirection: 'row', alignItems: 'center', gap: spacing.s12, paddingHorizontal: spacing.s16 },
-  tag: { paddingHorizontal: spacing.s8, paddingVertical: spacing.s4 },
-  tagText: { ...type.caption, fontWeight: '700', letterSpacing: 1 },
-  rowText: { flex: 1, gap: 2 },
-  rowName: { ...type.body, fontFamily: fontFamily.ui, fontWeight: '500' },
-  rowCode: { fontFamily: fontFamily.mono, fontVariant: ['tabular-nums'] },
-  rowMeta: { ...type.caption, fontFamily: fontFamily.ui },
-  rowQty: { ...type.bodyLg, fontFamily: fontFamily.mono, fontVariant: ['tabular-nums'] },
-  rowTime: { ...type.caption, fontFamily: fontFamily.mono, fontVariant: ['tabular-nums'], minWidth: 40, textAlign: 'right' },
-  divider: { height: StyleSheet.hairlineWidth, marginLeft: spacing.s16 },
-  empty: { paddingHorizontal: spacing.s16, paddingVertical: spacing.s24 },
-  emptyText: { ...type.body, fontFamily: fontFamily.ui },
 });

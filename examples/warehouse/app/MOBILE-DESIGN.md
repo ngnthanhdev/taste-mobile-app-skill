@@ -1,8 +1,8 @@
 ---
 # MOBILE-DESIGN.md
 # Design source of truth for the warehouse app (quản lý kho). Written by taste-mobile-app-skill
-# 0.2.0; Phases 0 to 5 complete, ready for Phase 6. Fields marked (inferred) were accepted by
-# default in the brief gate.
+# 0.2.0; all phases complete, every inventory screen built and checked on a simulator. Fields marked
+# (inferred) were accepted by default in the brief gate.
 version: 2
 updated: 2026-10-07
 stack: expo                      # (inferred) accepted by default; empty repo
@@ -289,6 +289,7 @@ None.
 ## Change log
 
 - 2026-10-07: created by taste-mobile-app-skill 0.2.0 in --direction-only mode (schema 2). Direction "Nhãn đen" chosen by the user over "Phiếu kho" and "Bảng đếm".
+- 2026-10-07: Phase 6 second run built the remaining eleven screens (Xuất kho, Kiểm kê in three steps, Chi tiết SKU, Vị trí, Chi tiết phiếu, Quét, Cài đặt, Đăng nhập, Điều chỉnh nhanh, Lọc lịch sử) plus the auth gate. Nhập and Xuất share one Focused Task component and differ only in consequence line, secondary fields and CTA, which is what the inventory asked for. Phase 7 on the simulator found and fixed in one round: the iOS number pad had no Done because KeyboardToolbar overlapped the sticky footer (replaced by an InputAccessoryView bar on the keyboard itself); the status bar was invisible on surface-topped screens (the ink bar now sets it and surface screens set it back); the scanner had no top inset as a full-screen modal; the permission button stretched full width; focused fields hid behind the sticky footer (scroll offset raised); "chưa đếm" was set in mono; chốt kiểm kê used dismissAll and skipped the tab root.
 - 2026-10-07: Phase 7 visual QA on the simulator: the ink-block button directly under the ink bar competed with it for the anchor on Tổng quan (VQ1, VQ8); the headline module now comes first and the action after it. Inventory row and first-viewport commitment updated. Selected chips are tonal with a 2 dp ink border so the primary action stays the only ink block on a screen.
 - 2026-10-07: Phase 6 build decision: the ink bar is the top app bar on tab roots and task modals (native header hidden) to avoid two headers; recorded under Chrome before the build.
 - 2026-10-07: Phase 5 added the Nav Read, a 15-screen inventory, flow decisions and the Visual QA contract. composition.allowed gained Hero for SKU detail: the label block with barcode is the object and takes the top third, which is the Hero hierarchy; the Phase 4 prohibition had been written before the inventory existed.

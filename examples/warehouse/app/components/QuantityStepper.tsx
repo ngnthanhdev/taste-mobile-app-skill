@@ -6,6 +6,7 @@ import Animated, { useAnimatedStyle, useReducedMotion, useSharedValue, withSeque
 import { duration, fontFamily, radius, spacing, touch, type } from '../theme/tokens';
 import { useTheme } from '../theme/useTheme';
 import { Chip } from './Chip';
+import { DONE_ACCESSORY_ID } from './DoneAccessory';
 
 type Props = {
   value: number;
@@ -18,7 +19,7 @@ type Props = {
 
 const REPEAT_MS = 120;
 
-export function QuantityStepper({ value, onChange, unit, disabled = false, quickAdds = [10, 50, 100], inputAccessoryViewID }: Props) {
+export function QuantityStepper({ value, onChange, unit, disabled = false, quickAdds = [10, 50, 100], inputAccessoryViewID = DONE_ACCESSORY_ID }: Props) {
   const c = useTheme();
   const reduceMotion = useReducedMotion();
   const offset = useSharedValue(0);

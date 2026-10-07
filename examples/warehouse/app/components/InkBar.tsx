@@ -1,7 +1,8 @@
 // The signature and the top app bar: a full-bleed ink bar inside the top safe area, once per screen.
 // Uppercase label left, one count right, optional leading (close/back) and trailing actions, 48 dp each.
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View, useColorScheme } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import { fontFamily, spacing, touch, type } from '../theme/tokens';
@@ -14,6 +15,7 @@ type Props = { label: string; count?: string; leading?: Action; trailing?: Actio
 export function InkBar({ label, count, leading, trailing = [], insetTop = true }: Props) {
   const c = useTheme();
   const insets = useSafeAreaInsets();
+  const dark = useColorScheme() === 'dark';
   const action = (a: Action) => (
     <Pressable
       key={a.label}
@@ -28,6 +30,7 @@ export function InkBar({ label, count, leading, trailing = [], insetTop = true }
   );
   return (
     <View style={[styles.wrap, { backgroundColor: c.accent, paddingTop: insetTop ? insets.top : 0 }]}>
+      {insetTop ? <StatusBar style={dark ? 'dark' : 'light'} /> : null}
       <View style={styles.bar} accessibilityRole="header">
         {leading ? action(leading) : null}
         <Text style={[styles.label, { color: c.onAccent, marginLeft: leading ? 0 : spacing.s16 }]}>{label.toUpperCase()}</Text>
