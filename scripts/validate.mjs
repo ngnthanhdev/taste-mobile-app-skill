@@ -38,7 +38,7 @@ for (const f of files) {
 }
 
 // 2. Content checks on every text file the agent might read.
-const INVISIBLE = /[​-‏‪-‮⁠-⁤⁦-⁩﻿]/;
+const INVISIBLE = /[\u200B-\u200F\u202A-\u202E\u2060-\u2064\u2066-\u2069\uFEFF]/;
 const SUSPICIOUS = [
   [/curl[^\n|]*\|\s*(ba|z)?sh\b/i, 'pipes a download into a shell'],
   [/wget[^\n|]*\|\s*(ba|z)?sh\b/i, 'pipes a download into a shell'],
