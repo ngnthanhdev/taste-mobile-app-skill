@@ -98,9 +98,15 @@ taste-mobile-app-skill/
 │   ├── stack-expo.md             # visual implementation contract + Expo / React Native APIs for every rule
 │   ├── stack-flutter.md          # visual implementation contract + Flutter APIs for every rule
 │   └── stack-swiftui.md          # visual implementation contract + SwiftUI APIs for every rule
-└── templates/
-    └── MOBILE-DESIGN.md          # the durable design file, schema 2
+├── templates/
+│   └── MOBILE-DESIGN.md          # the durable design file, schema 2
+└── examples/
+    └── warehouse/                # a full run: MOBILE-DESIGN.md, Expo source, simulator screenshots
 ```
+
+## Example
+
+[`examples/warehouse`](examples/warehouse) is one complete run on an empty repo: a warehouse app, Expo, Android-first, direction "Nhãn đen" (shipping label × factory kanban board). It shows the locked `MOBILE-DESIGN.md` with its 15-screen inventory and change log, the screens that Phase 6 built, and what the two Phase 7 passes found and fixed.
 
 ## Customising
 
