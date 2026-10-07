@@ -115,6 +115,10 @@ Patterns were studied from, and are credited to: [taste-skill](https://github.co
 
 ## Changelog
 
+**0.2.1** (2026-10-07)
+
+Updated: `stack-expo.md` for Expo Router 57 (vendored React Navigation import paths, `useBottomTabBarHeight` from `expo-router/tabs`, `usePreventRemove` from `expo-router/react-navigation`, confirm-discard via `useNavigation().dispatch`), keyboard-controller runs in Expo Go on SDK 57, modal top inset per platform, tab scene bottom offsets, npm 11 install recovery and the Reanimated 4 Babel plugin. Verified on a simulator during the warehouse-app test run.
+
 **0.2.0** (2026-10-06)
 
 Added: reference extraction, visual territory, visual DNA, composition system with eight archetypes and C-AI anti-patterns, screen archetypes, visual QA with the first viewport test, tells groups H (composition) and I (identity), MOBILE-DESIGN schema 2 with migration from schema 1.

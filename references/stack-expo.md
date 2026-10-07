@@ -1,6 +1,6 @@
 # Stack: Expo / React Native
 
-How to build screens in Expo / React Native. Rule IDs such as [R-SA1] and [R-BS5] come from the layout mechanics rules; this file maps them to code. APIs here change between releases. Where a claim has a URL, check the installed version and that page before relying on it.
+How to build screens in Expo / React Native. Rule IDs such as [R-SA1] and [R-BS5] come from the layout mechanics rules; this file maps them to code. APIs here change between releases. Where a claim has a URL, check the installed version and that page before relying on it. Claims marked (verified) were checked on Expo SDK 57 with Expo Router 57.0.25 in Expo Go on an iOS 26 simulator on 2026-10-07.
 
 ## 0. Visual implementation contract
 
@@ -12,7 +12,7 @@ Read these before writing a screen. The existing stack always wins over the defa
 
 | Read | Decide |
 |---|---|
-| `package.json` | `expo` SDK, `react-native`, `expo-router` vs `@react-navigation/*`, Reanimated major, and whether keyboard-controller, `@gorhom/bottom-sheet`, FlashList, `expo-image`, `expo-haptics` are present |
+| `package.json` | `expo` SDK, `react-native`, `expo-router` vs a bare `@react-navigation/*` setup (from Expo Router 57 the navigators are vendored inside `expo-router`, so `@react-navigation/*` in dependencies means an older router or a non-router project), Reanimated major, and whether keyboard-controller, `@gorhom/bottom-sheet`, FlashList, `expo-image`, `expo-haptics` are present |
 | `app.json` / `app.config.(js\|ts)` | `scheme` (deep links), `experiments.typedRoutes`, `android.softwareKeyboardLayoutMode`, `userInterfaceStyle`, plugins |
 | `app/_layout.tsx` | Expo Router is in use. If there is no `app/`, find the `NavigationContainer` and navigator files |
 | Styling, tokens | `nativewind` + `tailwind.config.*`, `tamagui.config.*`, a `react-native-paper` theme, or `StyleSheet` + a theme module. Tokens live in `theme.ts`, `tokens.ts`, `constants/Colors.ts` or Tailwind `theme.extend` |
@@ -24,7 +24,7 @@ Read these before writing a screen. The existing stack always wins over the defa
 
 - Expo + TypeScript + Expo Router (`app/` directory, file-based routes). Expo SDK 55+ always runs the New Architecture: https://docs.expo.dev/guides/new-architecture/
 - `react-native-safe-area-context`. It is installed with Expo Router, which also provides `SafeAreaProvider`: https://docs.expo.dev/develop/user-interface/safe-areas/
-- `react-native-keyboard-controller`. It needs Reanimated and is **not included in Expo Go**, so it needs a development build: https://docs.expo.dev/guides/keyboard-handling/
+- `react-native-keyboard-controller`. It needs Reanimated. It is included in Expo Go on SDK 57 (verified: `KeyboardProvider`, `KeyboardAwareScrollView`, `KeyboardStickyView` and `KeyboardToolbar` all ran in Expo Go); on older SDKs or with other native modules a development build is still required: https://docs.expo.dev/guides/keyboard-handling/
 - `@gorhom/bottom-sheet` (v5) on Reanimated + Gesture Handler: https://gorhom.dev/react-native-bottom-sheet/. Reanimated 4.x runs only on the New Architecture and needs `react-native-worklets`: https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started/
 - `expo-image` (`placeholder`, plus `recyclingKey` in list cells), `@shopify/flash-list` for any unbounded list (`ScrollView` only for short fixed content), `expo-haptics`.
 - One icon family: `expo-symbols` (SF Symbols on iOS, Material Symbols on Android, still beta) for an iOS-native look. Otherwise one `@expo/vector-icons` set, Lucide RN or Phosphor RN. Use one size and one stroke weight across the app, and never use emoji as icons.
@@ -33,7 +33,13 @@ Read these before writing a screen. The existing stack always wins over the defa
 npx expo install react-native-safe-area-context react-native-keyboard-controller @gorhom/bottom-sheet \
   react-native-reanimated react-native-worklets react-native-gesture-handler \
   expo-image @shopify/flash-list expo-haptics expo-symbols expo-dev-client
-npx expo run:ios   # or an EAS development build; Expo Go cannot load keyboard-controller
+npx expo run:ios   # or an EAS development build when a native module is not in Expo Go
+```
+
+Install recovery (verified on npm 11): `npx expo install` writes the matching versions to `package.json` but its own npm step can fail with `EALLOWSCRIPTS` or `ERESOLVE`. Then run `npm install --no-audit --no-fund --legacy-peer-deps` yourself and check `npm ls --depth=0` for `UNMET`. If Metro fails with `Cannot find module 'babel-preset-expo'`, add it as a devDependency the same way. Reanimated 4 needs `react-native-worklets/plugin` in `babel.config.js`:
+
+```js
+module.exports = (api) => { api.cache(true); return { presets: ['babel-preset-expo'], plugins: ['react-native-worklets/plugin'] }; };
 ```
 
 `npx expo install` picks versions that match the installed SDK. Do not hand-pin versions you have not checked. Set up the providers once in the root layout:
@@ -61,9 +67,9 @@ export default function RootLayout() {
 - Read insets with `useSafeAreaInsets()`. Never write `paddingTop: 44/47/50`: the iPhone top inset ranges from 47 to 68pt and Android OEMs differ [R-SA1].
 - Never import `SafeAreaView` from `react-native`. It is deprecated and iOS-only (https://reactnative.dev/docs/safeareaview). If you want the component, use the one from `react-native-safe-area-context` with explicit `edges`.
 - Apply insets to the containers that hold controls (header row, sticky CTA, floating banner), never to the root. Backgrounds, hero images and scrolling lists extend under the system bars [R-SA1]. On iOS 26, do not paint a solid fill under the tab bar or toolbar [R-SA2]. Android apps targeting SDK 35+ are edge-to-edge [R-SA3][R-SA4].
-- A visible navigator header already includes the top inset. Do not add `insets.top` again. Also skip it inside a modal or `formSheet` page, which already starts below the status bar.
+- A visible navigator header already includes the top inset. Do not add `insets.top` again. Inside a `modal` or `formSheet` page on iOS the sheet already starts below the status bar, yet `useSafeAreaInsets()` still reports the full top inset there (verified), so a custom bar in a modal must skip the inset on iOS and keep it on Android, where the modal covers the status bar: `paddingTop: Platform.OS === 'ios' ? 0 : insets.top`.
 - Give a sticky CTA `paddingBottom: Math.max(insets.bottom, 16)` and keep it in the bottom half of the screen [R-TZ1][R-TZ2][R-TZ3]. Tap targets are at least 44pt on iOS and 48dp on Android. Extend small icon buttons with `hitSlop`.
-- Tab screens: derive every bottom offset (last list row, FAB, floating banner) from one number. With the default JS `Tabs`, content ends above the bar, so add only your own gap. When the bar overlays content (`tabBarStyle: { position: 'absolute' }` with blur), use `useBottomTabBarHeight() + gap`. That hook already includes the bottom inset (verify in the installed version): https://reactnavigation.org/docs/bottom-tab-navigator/. NativeTabs adjust content insets automatically: https://docs.expo.dev/router/advanced/native-tabs/
+- Tab screens: derive every bottom offset (last list row, FAB, floating banner) from one number. With the default JS `Tabs`, content ends above the bar (verified), so add only your own gap; adding the bar height too pushes a snackbar a full bar height above the bar. When the bar overlays content (`tabBarStyle: { position: 'absolute' }` with blur), use `useBottomTabBarHeight() + gap`, imported from `expo-router/tabs` on Expo Router 57+ (`@react-navigation/bottom-tabs` is not installed there). That hook already includes the bottom inset (verify in the installed version): https://reactnavigation.org/docs/bottom-tab-navigator/. NativeTabs adjust content insets automatically: https://docs.expo.dev/router/advanced/native-tabs/
 - The tab bar must never ride up on the keyboard. Use `tabBarHideOnKeyboard: true`, or set `"softwareKeyboardLayoutMode": "pan"` under `android` in app.json [R-KB3].
 
 ```tsx
@@ -98,6 +104,17 @@ app/+not-found.tsx            explains what happened and offers a way out, never
 - Tabs only navigate; actions go in a toolbar or header [R-NV1]. Never hide or disable a tab [R-NV2]. Hide helper routes with `href: null`. The header has one primary action on the trailing side [R-NV3]. Back and close use standard symbols, never the words "Back" or "Close" [R-NV4].
 - `presentation` values: `card`, `modal`, `transparentModal`, `containedModal`, `fullScreenModal`, `formSheet`. Configure `formSheet` with `sheetAllowedDetents` (fractions or `'fitToContents'`), `sheetInitialDetentIndex`, `sheetGrabberVisible` (iOS), `sheetCornerRadius`. Android allows at most 3 detents, with no native header or nested stack inside: https://docs.expo.dev/router/advanced/modals/
 - Gate auth by redirecting between groups with `<Redirect href=...>` or the project's existing guard. The NativeTabs import path depends on the SDK version (`unstable-native-tabs` before SDK 58), and Android allows at most 5 native tabs.
+- **Expo Router 57 vendors React Navigation.** Do not add `@react-navigation/*` packages; import from the router's entry points instead (verified): `useBottomTabBarHeight` from `expo-router/tabs`, `usePreventRemove` and the theming helpers from `expo-router/react-navigation`, `useNavigation`, `useFocusEffect` and `useRouter` from `expo-router`. The `router` object has no `dispatch`; the confirm-discard pattern for a dirty modal uses the navigation object:
+
+```tsx
+const navigation = useNavigation();
+usePreventRemove(dirty && !saving, ({ data }: { data: { action: Parameters<typeof navigation.dispatch>[0] } }) => {
+  Alert.alert('Discard this draft?', 'Unsaved changes will be lost.', [
+    { text: 'Keep editing', style: 'cancel' },
+    { text: 'Discard', style: 'destructive', onPress: () => navigation.dispatch(data.action) },
+  ]);
+});
+```
 - Typed routes: set `experiments.typedRoutes: true` (beta, off by default except in the quick-start template): https://docs.expo.dev/router/reference/typed-routes/
 - Deep links: set `scheme`, and every file becomes a URL. A link to a deleted item lands on a screen that explains it and offers close. Rewrite incoming links in `+native-intent`.
 
@@ -253,6 +270,8 @@ g '(paddingTop|marginTop|top):[[:space:]]*(20|24|44|47|48|50|54|59|62|68)\b|Stat
 g '#[0-9a-fA-F]{3,8}\b|rgba?\(' | grep -vE '/(theme|tokens)/|tailwind\.config'
 g 'useNativeDriver:[[:space:]]*false'         # JS-thread animation
 g 'Alert\.alert\(' | wc -l                    # alert count: review each against [R-DL1]
+# Expo Router 57+: navigators are vendored; direct @react-navigation imports mean a missing package or a stale pattern
+g "from '@react-navigation/"
 # ScrollView wrapping .map: use FlashList for unbounded data
 grep -rlE "${INC[@]}" '<ScrollView' "${SRC[@]}" 2>/dev/null | xargs grep -HnE '\.map\('
 g '<LinearGradient' | wc -l                   # more than one or two per screen is decoration, not hierarchy
