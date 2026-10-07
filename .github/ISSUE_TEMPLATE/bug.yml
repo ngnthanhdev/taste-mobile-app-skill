@@ -1,0 +1,30 @@
+name: Skill produced a wrong or generic result
+description: The agent followed the skill and the output broke a rule, looked generated, or a stack snippet did not work.
+labels: [bug]
+body:
+  - type: input
+    id: stack
+    attributes:
+      label: Stack and versions
+      placeholder: Expo SDK 57 / Flutter 3.47 / iOS 26, Claude Code version
+    validations:
+      required: true
+  - type: textarea
+    id: brief
+    attributes:
+      label: The brief you gave
+      description: The command and the brief, and your answers to the question round if any.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Which rule or reference should have applied
+      placeholder: tells-mobile.md B16, layout-mechanics.md R-KB7, stack-expo.md §7 ...
+  - type: textarea
+    id: actual
+    attributes:
+      label: What the agent produced
+      description: Paste the relevant output or code, or attach a screenshot. Do not paste secrets.
+    validations:
+      required: true

@@ -115,6 +115,10 @@ taste-mobile-app-skill/
 - **Type scale, radius, spacing**: edit the defaults in `templates/MOBILE-DESIGN.md`; both skills read the project's file at run time.
 - **Category bias**: `references/dials.md` §5.
 
+## Contributing
+
+Issues, discussions and pull requests are welcome, in English or Vietnamese. Read [CONTRIBUTING.md](CONTRIBUTING.md) first: the skill is Markdown only, tell and rule IDs are stable, every rule needs a source or a reproduction, and `node scripts/validate.mjs` must pass. `main` changes only through a reviewed pull request; CI runs with a read-only token. Security findings go through [SECURITY.md](SECURITY.md).
+
 ## Credits
 
 Patterns were studied from, and are credited to: [taste-skill](https://github.com/Leonxlnx/taste-skill) (brief inference, dials, pre-flight), [impeccable](https://github.com/pbakaus/impeccable) (bounded question rounds, category-standard option, native references), [draftbit/mobile-taste-skill](https://github.com/draftbit/mobile-taste-skill) (App Read, chrome lags content, tells catalog, Nav Read), [RubenGlez/mobile-design](https://github.com/RubenGlez/mobile-design) (Ask vs Decide, output contract), and [google-labs-code/design.md](https://github.com/google-labs-code/design.md) (the token-plus-prose file shape). Platform rules come from Apple's Human Interface Guidelines, Android developer documentation and the Material 3 sources. Flow evidence from Nielsen Norman Group, Baymard and Apple.

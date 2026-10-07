@@ -1,0 +1,15 @@
+name: Feature or reference change
+description: A new reference, a new stack, a change to a phase, or a correction with a source.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Evidence or source
+      description: HIG, Material 3, platform docs, a study, or a verified run.

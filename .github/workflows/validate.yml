@@ -1,0 +1,41 @@
+name: validate
+
+# Runs on every pull request with a read-only token. Forks get no secrets and cannot write to the
+# repository, so a malicious PR can at most fail its own check.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  skill:
+    name: skill files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate skill files, links, IDs and hidden content
+        env:
+          BASE_REF: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || '' }}
+        run: node scripts/validate.mjs
+
+  example:
+    name: example typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install and typecheck examples/warehouse
+        working-directory: examples/warehouse/app
+        run: |
+          npm install --no-audit --no-fund --legacy-peer-deps
+          npx tsc --noEmit -p .

@@ -1,0 +1,30 @@
+name: Propose a new tell or rule
+description: You keep seeing a generated-looking pattern the catalog does not catch yet.
+labels: [enhancement, tells]
+body:
+  - type: textarea
+    id: pattern
+    attributes:
+      label: The pattern
+      description: What it looks like, on which kind of screen. A screenshot of generated output helps.
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it reads as generated
+    validations:
+      required: true
+  - type: input
+    id: check
+    attributes:
+      label: How it can be checked
+      placeholder: S grep for ..., V count ... on a screenshot, C quote evidence ...
+    validations:
+      required: true
+  - type: textarea
+    id: instead
+    attributes:
+      label: What to do instead
+    validations:
+      required: true

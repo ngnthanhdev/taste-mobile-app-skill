@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question or discussion (tiếng Việt cũng được)
+    url: https://github.com/ngnthanhdev/taste-mobile-app-skill/discussions
+    about: Ask how to use the skill, share a run, or propose an idea before writing a PR.
+  - name: Security report
+    url: https://github.com/ngnthanhdev/taste-mobile-app-skill/security/advisories/new
+    about: Hidden instructions, unsafe commands or anything that could harm a user's machine. Report privately.
