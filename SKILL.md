@@ -93,7 +93,7 @@ Write `MOBILE-DESIGN.md` at the project root from `templates/MOBILE-DESIGN.md` (
 
 ```
 ✓ App Read              ✓ Visual territory        ✓ Reference principles
-✓ Visual DNA (10)       ✓ Dials                   ✓ Composition system (defaults, allowed, limits)
+✓ Visual DNA (10)       ✓ Dials                   ✓ Composition system (defaults, allowed draft, limits)
 ✓ Tokens (colors, dark) ✓ Typography              ✓ Imagery
 ✓ Surface language      ✓ Shape language          ✓ Motion language
 ✓ Copy voice            ✓ Signature               ✓ Deliberately not doing
@@ -101,12 +101,12 @@ Write `MOBILE-DESIGN.md` at the project root from `templates/MOBILE-DESIGN.md` (
 ✓ Visual QA contract (Phase 5)
 ```
 
-If Visual DNA or the composition system is missing, do not proceed to Phase 6. This file is the design source of truth for this and every later session, including `mobile-app-studio`. Stop here with `--direction-only` (the Phase 5 items are then marked pending).
+If Visual DNA or the composition system is missing, do not proceed to Phase 6. The `allowed` and `prohibited` archetype lists are a draft at this point: they are written before the inventory exists and are confirmed or amended in Phase 5, with the change recorded in the change log. This file is the design source of truth for this and every later session, including `mobile-app-studio`. Stop here with `--direction-only` (the Phase 5 items are then marked pending).
 
 ## Phase 5 — Navigation, archetypes and flows
 
 1. Emit the **Nav Read** from `references/navigation.md`: tabs or no tabs, route tree with container type per route, entry points, sheets, deep links, Android back exceptions, max taps to any core screen. Add it to `MOBILE-DESIGN.md`. Navigation determines movement; Visual DNA determines treatment. Never use styling to compensate for a wrong IA.
-2. Build the **screen inventory** with the schema 2 columns: purpose, archetype (`references/screen-archetypes.md` §1), focal point, hierarchy (first three or four levels), primary action, signature, content strategy, surface strategy, four states, keyboard plan, permissions. Form screens also answer the four questions in `references/patterns.md` §4b. Run the sameness check (`references/screen-archetypes.md` §3) on the finished inventory.
+2. Build the **screen inventory** with the schema 2 columns: purpose, archetype (`references/screen-archetypes.md` §1), focal point, hierarchy (first three or four levels), primary action, signature, content strategy, surface strategy, four states, keyboard plan, permissions. Form screens also answer the four questions in `references/patterns.md` §4b. Use the table for up to eight screens and one block per screen above that (`references/patterns.md` §12). Run the sameness check (`references/screen-archetypes.md` §3) on the finished inventory, then confirm or amend `composition.allowed` and `composition.prohibited` and record any change.
 3. Apply `references/patterns.md` for onboarding, sign-in timing, permissions, empty and error states, loading, the one success moment, and visual variation by task (§13).
 4. Write the **Visual QA contract** section from the inventory and the composition limits.
 

@@ -83,13 +83,34 @@ Form fields that remain are grouped by mental model, carry persistent labels, th
 
 ## 12. Screen inventory format
 
-Phase 5 produces one row per screen:
+Phase 5 produces one entry per screen with these fields: Screen, Purpose, Archetype, Focal point, Hierarchy, Primary action, Signature, Content strategy, Surface strategy, States (L/E/Err/P), Keyboard plan, Permissions.
+
+Archetype comes from `screen-archetypes.md` §1; hierarchy is the first three or four levels in order (`composition.md` §1); content strategy says what leads (image-first, number-first, text-first, list-first, object-first); surface strategy says open canvas, grouped lists or cards-to-group. A screen is ready to build only when every field is filled. "n/a" is allowed for keyboard, permissions and signature; it is not allowed for states, archetype, focal point or hierarchy.
+
+**Up to eight screens**, use the table:
 
 ```
 | Screen | Purpose | Archetype | Focal point | Hierarchy | Primary action | Signature | Content strategy | Surface strategy | States (L/E/Err/P) | Keyboard plan | Permissions |
 ```
 
-Archetype comes from `screen-archetypes.md` §1; hierarchy is the first three or four levels in order (`composition.md` §1); content strategy says what leads (image-first, number-first, text-first, list-first); surface strategy says open canvas, grouped lists or cards-to-group. A screen is ready to build only when every column is filled. "n/a" is allowed for keyboard, permissions and signature; it is not allowed for states, archetype, focal point or hierarchy.
+**More than eight screens**, the table stops being readable; use one block per screen, same fields, same order:
+
+```
+### Nhập kho (modal)
+Purpose: receive a quantity of one SKU
+Archetype: Focused Task
+Focal point: the label block, then the 32 dp quantity
+Hierarchy: label block > stepper with quick chips > consequence line > lot and expiry chips > last receipt row > CTA
+Primary action: Lưu phiếu
+Signature: ink bar; rolling numeral
+Content strategy: object-first
+Surface strategy: open canvas; one filled text field
+States: L skeleton label / E no SKU yet, stepper disabled / Err save failed, draft kept / P
+Keyboard plan: stepper default; number pad fallback with Done [R-KB7]; CTA in a keyboard-sticky footer [R-KB1]
+Permissions: camera via Quét
+```
+
+Either form ends with the sameness check (`screen-archetypes.md` §3) and, after it, the confirmed `composition.allowed` and `composition.prohibited` lists; the Phase 4 lists were a draft written before the screens existed.
 
 ## 13. Visual variation by task
 

@@ -52,6 +52,7 @@ visual_dna:
   interaction: <direct manipulation, swipe actions, undo, haptic vocabulary>
 
 # Screen composition defaults (references/composition.md). Per-screen values live in the inventory.
+# allowed / prohibited are a draft in Phase 4 and are confirmed in Phase 5 after the sameness check.
 composition:
   default_archetype: "<hero | editorial | canvas | feed | dashboard | focused-task | list | immersive>"
   allowed: [<archetypes this app uses>]
@@ -184,6 +185,8 @@ max taps to any core screen:
 |---|---|---|---|---|---|---|---|---|---|---|---|
 
 Example row: `Home · discover today's recommendations · editorial · hero image, top · image > title > metadata > save · save · oversized title crossing the image edge · image-first, one item per viewport · open canvas, no cards · L skeleton of one item / E first-run prompt / Err cached + retry / P · n/a · none`.
+
+Above eight screens, replace the table with one block per screen in the same field order (`patterns.md` §12). End the inventory with the sameness check result and the confirmed `composition.allowed` / `composition.prohibited` lists.
 
 ## Flow decisions
 
