@@ -55,6 +55,7 @@ const mdFiles = files.filter((f) => f.endsWith('.md'));
 for (const f of files) {
   const ext = extname(f).toLowerCase();
   if (!TEXT_EXT.has(ext)) continue;
+  if (f === 'scripts/validate.mjs') continue; // defines the patterns it looks for
   const text = readFileSync(join(root, f), 'utf8');
   if (INVISIBLE.test(text)) fail(f, 'contains zero-width or bidirectional control characters (hidden text)');
   for (const [re, why] of SUSPICIOUS) if (re.test(text)) fail(f, why);
