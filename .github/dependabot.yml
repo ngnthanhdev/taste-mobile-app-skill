@@ -1,11 +1,8 @@
 version: 2
 updates:
+  # Only GitHub Actions. The warehouse example pins its native modules to the
+  # Expo SDK it targets; update those with `npx expo install --fix`, not Dependabot.
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: monthly
-  - package-ecosystem: npm
-    directory: /examples/warehouse/app
-    schedule:
-      interval: monthly
-    open-pull-requests-limit: 3
