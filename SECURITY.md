@@ -10,7 +10,7 @@ The validator in `scripts/validate.mjs` runs on every pull request and blocks th
 
 ## Reporting
 
-Use the private advisory form: https://github.com/ngnthanhdev/taste-mobile-app-skill/security/advisories/new
+Use the private advisory form: https://github.com/orbitextechlab/taste-mobile-app-skill/security/advisories/new
 
 Include the file and line, what an agent would do when it reads it, and how you found it. Reports are acknowledged within a few days. Please do not open a public issue for a hidden-instruction finding until it is fixed, since users may have the skill installed.
 

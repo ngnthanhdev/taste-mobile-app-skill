@@ -4,7 +4,7 @@
 
 Most AI-built mobile UI looks the same because, given a vague brief, the model picks the statistically safest layout: an indigo gradient, five tabs with a center button, every screen a stack of white cards, "Welcome back, John 👋". Banning that produces a second failure: correct tokens, native mechanics, no slop, and still no identity, because every screen was assembled from the same components in the same order. Adjectives fix neither. A specific target does: who uses the app and when, what the subject looks like in the physical world, principles extracted from two or three references, a visual territory, a composition system, and a design file that is locked before any code.
 
-This skill is the **front half** of [mobile-app-studio](https://github.com/ngnthanhdev/mobile-app-studio). It produces the direction, the navigation plan and the screens. mobile-app-studio then runs the app on a device, audits it against the same `MOBILE-DESIGN.md`, and fixes what it finds.
+This skill is the **front half** of [mobile-app-studio](https://github.com/orbitextechlab/mobile-app-studio). It produces the direction, the navigation plan and the screens. mobile-app-studio then runs the app on a device, audits it against the same `MOBILE-DESIGN.md`, and fixes what it finds.
 
 Works with **Expo / React Native, Flutter and SwiftUI**.
 
@@ -40,13 +40,13 @@ Works with **Expo / React Native, Flutter and SwiftUI**.
 ## Install
 
 ```bash
-git clone https://github.com/ngnthanhdev/taste-mobile-app-skill.git ~/.claude/skills/taste-mobile-app-skill
+git clone https://github.com/orbitextechlab/taste-mobile-app-skill.git ~/.claude/skills/taste-mobile-app-skill
 ```
 
 For one project only:
 
 ```bash
-git clone https://github.com/ngnthanhdev/taste-mobile-app-skill.git .claude/skills/taste-mobile-app-skill
+git clone https://github.com/orbitextechlab/taste-mobile-app-skill.git .claude/skills/taste-mobile-app-skill
 ```
 
 Restart Claude Code or start a new session.
