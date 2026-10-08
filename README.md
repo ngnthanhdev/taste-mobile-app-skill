@@ -141,4 +141,4 @@ First release: brief gate, dials, directions, tokens, navigation, layout mechani
 
 ## License
 
-[MIT](LICENSE) © ngnthanhdev
+[MIT](LICENSE) © Orbitex Lab

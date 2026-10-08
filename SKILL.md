@@ -7,7 +7,7 @@ category: frontend
 keywords: [mobile, design, ux, ui, taste, art-direction, composition, visual-dna, anti-slop, expo, react-native, flutter, swiftui, design-system, navigation, onboarding, safe-area, bottom-sheet, keyboard]
 argument-hint: "[brief or feature] [--stack expo|flutter|swiftui] [--autonomous] [--redesign] [--direction-only]"
 metadata:
-  author: ngnthanhdev
+  author: Orbitex Lab
   version: "0.2.1"
   design-schema: "2"
 ---
